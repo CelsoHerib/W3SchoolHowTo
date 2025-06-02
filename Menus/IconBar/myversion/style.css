@@ -21,9 +21,9 @@ body{
     text-align: center;
     padding: 12px 0;
     color: white;
-    text-decoration: none;
     font-size: 36px;
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .icon-bar-list{
@@ -31,13 +31,19 @@ body{
     padding: 0;
     margin: 0;
 }
+
 .icon-bar a i{
     display: block;
 }
+
 .icon-bar a:hover{
     background-color: #000;
 }
 
-.icon-bar a.active{
-    background-color: #4CAF50;
+.icon-bar a.active:hover{
+    color: #000;
+}
+
+.icon-bar a i:hover{
+    color: #4CAF50;
 }
