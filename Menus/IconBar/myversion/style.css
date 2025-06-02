@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.icon-bar{
+    width: 100%;
+    background-color: #555;
+    overflow: auto;
+}
+
+.icon-bar a{
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding: 12px 0;
+    color: white;
+    text-decoration: none;
+    font-size: 36px;
+    transition: all 0.3s ease;
+}
+
+.icon-bar-list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.icon-bar a i{
+    display: block;
+}
+.icon-bar a:hover{
+    background-color: #000;
+}
+
+.icon-bar a.active{
+    background-color: #4CAF50;
+}
