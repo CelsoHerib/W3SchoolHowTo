@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Icon Bar Horizontal | CelsoHerib</title>
 </head>
+
 <body>
     <header>
         <nav class="icon-bar">
@@ -14,38 +16,40 @@
                 <li><a href="#home" id="home"><i class="fa fa-home"></i></a></li>
                 <li><a href="https://www.google.com/" target="_blank"><i class="fa fa-search"></i></a></li>
                 <li><a href="https://tuta.com/es/secure-email" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                <li><a href="https://earth.google.com/web/@0,-2.008,0a,22251752.77375655d,35y,0h,0t,0r/data=CgRCAggBQgIIAEoNCP___________wEQAA" target="_blank"><i class="fa fa-globe"></i></a></li>
-                <li><a href="#" id="trash"><i class="fa fa-trash"></i></a></li>
+                <li><a href="https://earth.google.com/web/@0,-2.008,0a,22251752.77375655d,35y,0h,0t,0r/data=CgRCAggBQgIIAEoNCP___________wEQAA"
+                        target="_blank"><i class="fa fa-globe"></i></a></li>
+                <li><a href="#" id="trash" ondblclick="alert('has been deleted!')"><i class="fa fa-trash"></i></a></li>
             </ul>
         </nav>
     </header>
     <main>
-       <section id="sectionHome" style="display: none;">
-        <h1>Icon Bar Horizontal</h1>
-        <p>This is a simple horizontal icon bar using Font Awesome icons.</p>
-        <p>Click on the icons to navigate to different sections or external links.</p>
-       </section>
+        <section id="sectionHome" style="display: none;">
+            <h1>Icon Bar Horizontal</h1>
+            <p>This is a simple horizontal icon bar using Font Awesome
+                icons.</p>
+            <p>Click on the icons to navigate to different sections or
+                external links.</p>
+        </section>
+        <section id="sectionTrash">
+            </section>
     </main>
     <script>
         const home = document.querySelector('#home');
         const trash = document.querySelector('#trash');
 
-const sectionHome = document.querySelector('#sectionHome');
+        const sectionHome = document.querySelector('#sectionHome');
 
-home.addEventListener('click', function() {
-  if (sectionHome.style.display === 'none') {
-    sectionHome.style.display = 'block';
-  } else {
-    sectionHome.style.display = 'none';
-  }
-});
-trash.addEventListener('click', function() {
-    if (sectionHome.style.display === 'block') {
-        sectionHome.style.display = 'none';
-    } else {
-        sectionHome.style.display = 'block';
-    }
-});
+        home.addEventListener('click', function () {
+            if (sectionHome.style.display === 'none') {
+                sectionHome.style.display = 'block';
+            }
+        });
+        trash.addEventListener('click', function () {
+                
+            sectionHome.style.display = 'none';
+            alert('has been deleted!');
+        });
     </script>
 </body>
+
 </html>
