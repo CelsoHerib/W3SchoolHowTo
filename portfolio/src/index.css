@@ -1,11 +1,10 @@
 @import "tailwindcss";
-
-
-/* Base */
-html{
-    scroll-behavior: smooth;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body{
-    @apply bg-zinc-900 text-zinc-50 h-[200vh];
+    scroll-behavior: smooth;
 }
