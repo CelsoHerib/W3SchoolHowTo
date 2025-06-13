@@ -5,6 +5,7 @@ export default function Navbar(){
     return(
         <NavBar>
         <div class="sidebar">
+            <a href="#home"><img src="./src/images/logo.png" alt="logo" /></a>
   <a href="#home"><i class="fa fa-fw fa-home"></i> Home</a>
   <a href="#about"><i class="fa fa-fw fa-address-card"></i> About</a>
   <a href="#clients"><i class="fa fa-fw fa-user"></i> Testimonials</a>
