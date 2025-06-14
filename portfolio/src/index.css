@@ -1,6 +1,21 @@
 @import "tailwindcss";
+
+:root {
+    --primary-color: #302951;
+    --primary-color2: #4e4999;
+    --primary-color-dark: #222138;
+    --secundary-color: #54b7be;
+    --text-hover: #6135ba;
+    --text-dark: #333;
+    --text-light: #bebebd;
+    --white: #fff;
+    --black: #000;
+    --max-width: 1200px;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background-color: black;
 }
