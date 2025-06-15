@@ -19,7 +19,7 @@ const Header = styled.header`
   flex-direction: column; /* Cambio clave: elementos en columna */
   justify-content: center;
   align-items: center;
-  padding-left: 10%;
+  padding-left: 7%;
   
   .photo {
     width: 500px;
