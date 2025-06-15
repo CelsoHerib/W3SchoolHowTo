@@ -64,7 +64,6 @@ export default function Projects() {
   );
 }
 
-// Reutiliza los estilos de About o modifícalos según necesites
 const ProjectsContainer = styled.div`
   min-height: 100vh;
   background: #000;
@@ -75,7 +74,7 @@ const ProjectsContainer = styled.div`
   padding: 4rem 2rem;
 `;
 
-// Reutiliza los componentes estilizados de About
+
 const SeparatorSection = styled.div`
   width: 100%;
   max-width: 1200px;
@@ -146,23 +145,22 @@ const Title = styled.h1`
 `;
 
 const ContentSection = styled.div`
-  max-width: 1200px;
+  max-width: 1100px;
   text-align: center;
   
   p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.8;
     margin-bottom: 2rem;
     color: #ccc;
   }
 `;
 
-// Nuevos estilos específicos para Projects
 const ProjectsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
-  margin: 3rem 0 5rem;
+  margin: 3rem 0 4rem;
 `;
 
 const ProjectCard = styled.div`

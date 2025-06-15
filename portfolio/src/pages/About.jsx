@@ -104,7 +104,7 @@ const LogoContainer = styled.div`
   img {
     width: 60px;
     height: 60px;
-    filter: brightness(0) invert(1); /* Hace la imagen blanca */
+    filter: brightness(0) invert(1);
   }
 `;
 
