@@ -19,15 +19,14 @@ export default function Testimonials() {
             <img src="./src/images/chris.jpg" alt="Mia Kenric" />
           </Avatar>
           <TestimonialCard color="#4f7df3">
-            <QuoteIcon>"</QuoteIcon>
-            <Quote>
+           
+          
               I love Saascuy. Your services helped locate the press contacts I make a breast cancer awareness video did we go viral. We were able to spread the word.
-            </Quote>
+        
             <AuthorInfo>
-              <Name>Mia Kenric</Name>
+              <Name>Chis Kenric</Name>
               <Position>CEO at Mighty Schools</Position>
             </AuthorInfo>
-            <ClosingQuote>"</ClosingQuote>
           </TestimonialCard>
         </TestimonialItem>
 
@@ -36,15 +35,13 @@ export default function Testimonials() {
             <img src="./src/images/rebecca.png" alt="Rebecca Flex" />
           </Avatar>
           <TestimonialCard color="#e63b8f">
-            <QuoteIcon>"</QuoteIcon>
-            <Quote>
+
+          
               The knowledge that the use of face masks delays Covid-19 transmissions. We need guidance on how masks should be used by the public to fight pandemic crises.
-            </Quote>
             <AuthorInfo>
               <Name>Rebecca Flex</Name>
               <Position>CEO at Company</Position>
             </AuthorInfo>
-            <ClosingQuote>"</ClosingQuote>
           </TestimonialCard>
         </TestimonialItem>
       </TestimonialsGrid>
@@ -52,7 +49,7 @@ export default function Testimonials() {
   );
 }
 
-// ESTILOS
+
 const TestimonialsContainer = styled.div`
   min-height: 100vh;
   background: #000;
@@ -162,7 +159,7 @@ const TestimonialCard = styled.div`
   &::after {
     content: '';
     position: absolute;
-    top: 20px;
+    top: 70px;
     width: 0;
     height: 0;
     border-left: 15px solid transparent;
@@ -183,36 +180,6 @@ const TestimonialCard = styled.div`
       transform: rotate(180deg);
     }
   }
-`;
-
-const QuoteIcon = styled.div`
-  font-size: 3rem;
-  font-family: serif;
-  line-height: 1;
-  opacity: 0.2;
-  position: absolute;
-  top: 0.5rem;
-  left: 1rem;
-`;
-
-const ClosingQuote = styled.div`
-  font-size: 3rem;
-  font-family: serif;
-  line-height: 1;
-  opacity: 0.2;
-  position: absolute;
-  bottom: 0.5rem;
-  right: 1rem;
-  transform: rotate(180deg);
-`;
-
-const Quote = styled.p`
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin: 2rem 0 2.5rem 0;
-  font-weight: 400;
-  position: relative;
-  z-index: 1;
 `;
 
 const Avatar = styled.div`
