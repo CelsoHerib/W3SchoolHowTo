@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function Home() {
   return (
     <Header>
-      <img src="./src/images/photo.png" alt="photo" className="photo"/>
+      <img src="./src/images/photo.png" alt="photo" className="photo" />
       <Content>
         <h1>Celso Herib Ortigoza Duarte</h1>
         <span>Full stack developer</span>
@@ -12,45 +12,62 @@ export default function Home() {
   );
 }
 
+// Asumimos que el navbar tiene un ancho fijo de 200px a la izquierda
 const Header = styled.header`
-  width: 100%;
+  width: calc(100% - 200px);
+  margin-left: 200px; /* Deja espacio para el navbar */
   height: 100vh;
   display: flex;
-  flex-direction: column; /* Cambio clave: elementos en columna */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 7%;
-  
+  padding: 1rem;
+
   .photo {
-    width: 500px;
-    max-width: 90%; /* Para responsive */
-    margin-bottom: 2rem; /* Espacio entre imagen y texto */
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 2rem;
+    border-radius: 10px;
   }
 
-  img {
+  @media (max-width: 768px) {
     width: 100%;
-    display: block;
-    border-radius: 10px; /* Opcional: esquinas redondeadas */
+    margin-left: 0; /* Elimina el espacio del navbar */
+    padding: 1rem;
+
+    .photo {
+      max-width: 80%;
+    }
   }
 `;
 
 const Content = styled.div`
   text-align: center;
-  
+
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 500;
     text-transform: uppercase;
-    color: var(--secunday-color);
+    color: var(--text-light);
     -webkit-text-stroke: 1px white;
     margin: 0 0 1rem 0;
-    color: var(--text-light);
   }
-  
+
   span {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: var(--secundary-color);
     -webkit-text-stroke: 1px white;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    span {
+      font-size: 1.2rem;
+    }
   }
 `;
