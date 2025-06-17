@@ -1,16 +1,18 @@
-import React, { useContext } from 'react'; // Importa useContext
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-import { NavbarContext } from '..components/NavbarContext'; // Importa tu contexto de Navbar
+// No necesitas importar NavbarContext si solo usas las props para el padding
+// en ProjectsContainer, ya que App.jsx ya se encarga del desplazamiento.
+// Sin embargo, si lo necesitas para alguna otra lógica interna del componente Projects,
+// puedes mantenerlo. Para el padding, lo eliminaremos aquí.
+// import { NavbarContext } from '../components/NavbarContext'; // Ya no es estrictamente necesario aquí para el padding
 
 export default function Projects() {
-  // Consume el contexto para obtener el ancho del navbar y el estado de la pantalla
-  const { navbarWidth, isSmallScreen, isMobileMenuOpen } = useContext(NavbarContext);
 
-  // Configuración del carrusel (la misma que ya tenías)
+  // const { navbarWidth, isSmallScreen, isMobileMenuOpen } = useContext(NavbarContext); // Ya no es necesario obtenerlos para el padding
+
   const settings = {
     dots: true,
     infinite: true,
@@ -30,13 +32,12 @@ export default function Projects() {
         }
       },
       {
-        breakpoint: 768, // Para pantallas de hasta 768px (tablets y móviles)
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 1,
-          // Ajusta las flechas y los puntos si es necesario en móvil
-          arrows: false, // Ocultar flechas en móvil
+          arrows: false,
         }
       },
       {
@@ -44,7 +45,7 @@ export default function Projects() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          arrows: false, // Ocultar flechas en móvil
+          arrows: false,
         }
       }
     ]
@@ -84,8 +85,7 @@ export default function Projects() {
   ];
 
   return (
-    // Pasa las props de navbar al contenedor principal de la sección
-    <ProjectsContainer navbarWidth={navbarWidth} isSmallScreen={isSmallScreen} isMobileMenuOpen={isMobileMenuOpen}>
+    <ProjectsContainer> {/* Eliminamos las props de ancho */}
       <SeparatorSection>
         <SeparatorLine />
         <LogoContainer>
@@ -132,24 +132,25 @@ const ProjectsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 2rem; /* Padding base */
+  padding: 4rem 2rem; /* Mantén un padding fijo para el contenido interno */
   width: 100%;
-  overflow: hidden;
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+  overflow: hidden; /* Esto es importante para el carrusel, si no se maneja bien */
 
-  /* Ajustar padding-left/margin-left basado en el ancho del navbar */
-  /* Este padding solo aplica en pantallas GRANDES */
-  padding-left: ${(props) => (props.isSmallScreen ? "2rem" : props.navbarWidth)};
-  transition: padding-left 0.3s ease; /* Transición suave para el padding */
+  /* --- ELIMINAMOS TODA LA LÓGICA DE PADDING-LEFT BASADA EN NAVBAR --- */
+  /* El padre (MainContentWithContext en App.jsx) ya maneja el margen */
+  /*
+  padding-left: ${(props) => (props.isSmallScreen ? "4rem" : props.navbarWidth)};
+  transition: padding-left 0.3s ease;
 
   @media (max-width: 768px) {
-    /* En pantallas pequeñas, el padding-left solo debe existir si el menú está abierto */
-    /* Si el menú móvil está abierto, desplaza el contenido. Si está cerrado, ocupa todo el ancho */
     padding-left: ${(props) => (props.isMobileMenuOpen ? '140px' : '0px')};
     transition: padding-left 0.3s ease;
-    width: 100%; /* Ocupa todo el ancho */
-    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
-    padding-right: 0px; /* Elimina padding-right si lo hay, para que ocupe todo */
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 0px;
   }
+  */
 `;
 
 const SeparatorSection = styled.div`
@@ -245,14 +246,11 @@ const CarouselWrapper = styled.div`
     margin: 0 -10px;
   }
 
-  /* Estilos para las flechas de navegación */
   .slick-prev:before, .slick-next:before {
     color: white;
     font-size: 30px;
   }
 
-  /* Posicionamiento de las flechas para evitar conflictos con el navbar lateral */
-  /* Ajusta estos valores si las flechas se superponen con tu contenido */
   .slick-prev {
     left: -40px;
     z-index: 1;
@@ -263,7 +261,6 @@ const CarouselWrapper = styled.div`
     z-index: 1;
   }
 
-  /* Estilos para los puntos de navegación */
   .slick-dots li button:before {
     color: #ccc;
     font-size: 10px;
@@ -274,10 +271,14 @@ const CarouselWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-    /* Aquí ya no necesitas ocultar las flechas si ya lo haces en las settings del Slider */
-    /* .slick-prev, .slick-next {
-      display: none !important;
-    } */
+     /* Asegúrate de que los botones de navegación no se salgan del layout */
+     .slick-prev {
+        left: 0px; /* Ajusta para que no se salga */
+     }
+     .slick-next {
+        right: 0px; /* Ajusta para que no se salga */
+        display: none !important; /* Si quieres ocultarlo */
+     }
     .slick-dots {
       bottom: -30px;
     }
@@ -297,7 +298,7 @@ const ProjectCard = styled.div`
 
   &:hover {
     transform: translateY(-5px);
-    border: 1px solid white;
+    border: 1px solid var(--text-hover);
   }
 `;
 

@@ -1,6 +1,25 @@
 import styled from 'styled-components';
 
+// Importa tus logos aquí. Asegúrate de que las rutas sean correctas.
+// Asumo que los logos están en src/images/skills/
+import reactLogo from '../images/react.png';
+import nodeLogo from '../images/node.png';
+import jsLogo from '../images/javascript.png';
+import pythonLogo from '../images/python.png';
+import mongoLogo from '../images/mongo.png';
+import postgresLogo from '../images/postgre.png';
+
 export default function About() {
+  // Objeto para almacenar los datos de los skills (nombre y ruta del logo)
+  const skillData = [
+    { name: 'React', logo: reactLogo },
+    { name: 'Node.js', logo: nodeLogo },
+    { name: 'JavaScript', logo: jsLogo },
+    { name: 'Python', logo: pythonLogo },
+    { name: 'MongoDB', logo: mongoLogo },
+    { name: 'PostgreSQL', logo: postgresLogo },
+  ];
+
   return (
     <AboutContainer>
       <SeparatorSection>
@@ -26,12 +45,12 @@ export default function About() {
         </p>
         
         <SkillsGrid>
-          <SkillItem>React</SkillItem>
-          <SkillItem>Node.js</SkillItem>
-          <SkillItem>JavaScript</SkillItem>
-          <SkillItem>Python</SkillItem>
-          <SkillItem>MongoDB</SkillItem>
-          <SkillItem>PostgreSQL</SkillItem>
+          {skillData.map((skill, index) => (
+            <SkillItem key={index}>
+              <span>{skill.name}</span>
+              <SkillLogo src={skill.logo} alt={`${skill.name} logo`} />
+            </SkillItem>
+          ))}
         </SkillsGrid>
       </ContentSection>
     </AboutContainer>
@@ -144,9 +163,46 @@ const SkillItem = styled.div`
   text-align: center;
   transition: all 0.3s ease;
   
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  position: relative; 
+  overflow: hidden; 
+  min-height: 100px; 
+
+
+  span {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    transition: opacity 0.3s ease; 
+  }
+
   &:hover {
-    border-color: white;
+    border-color: var(--text-hover);
     background: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
+
+    span {
+      opacity: 0; 
+    }
+
+    img {
+      opacity: 1; 
+      transform: translate(-50%, -50%) scale(1); /* Vuelve a su posición original centrado */
+    }
   }
+`;
+
+const SkillLogo = styled.img`
+  width: 60px; 
+  height: 60px;
+  object-fit: contain;
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0); /* Lo oculta escalándolo a 0, pero lo mantiene centrado */
+  opacity: 0; 
+  transition: opacity 0.3s ease, transform 0.3s ease; 
 `;

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useLocation } from 'react-router-dom';
-import { NavbarContext } from './NavbarContext'; // Asegúrate de que esta ruta sea correcta
+import { NavbarContext } from './NavbarContext';
 
 export default function Navbar() {
   const location = useLocation();
   const [isHovered, setIsHovered] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
-  // Nuevo estado para controlar si el menú móvil está abierto
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [currentNavbarWidth, setCurrentNavbarWidth] = useState('70px');
@@ -16,7 +15,6 @@ export default function Navbar() {
     const handleResize = () => {
       const smallScreen = window.innerWidth < 768;
       setIsSmallScreen(smallScreen);
-      // Cuando el tamaño de la pantalla cambia a grande, asegura que el menú móvil esté cerrado
       if (!smallScreen && isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
       }
@@ -25,17 +23,16 @@ export default function Navbar() {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [isMobileMenuOpen]); // Agregamos isMobileMenuOpen como dependencia para que el efecto reaccione a su cambio
+  }, [isMobileMenuOpen]);
 
-  // shouldBeCollapsed ahora depende de si es pantalla pequeña y si el menú móvil está abierto
   const shouldBeCollapsed = isSmallScreen ? !isMobileMenuOpen : !isHovered;
 
   useEffect(() => {
     let width;
     if (isSmallScreen) {
-      width = isMobileMenuOpen ? "140px" : "0px"; // Si es pantalla pequeña y menú abierto, ancho 140px, sino 0px (oculto)
+      width = isMobileMenuOpen ? "140px" : "0px";
     } else {
-      width = shouldBeCollapsed ? "70px" : "160px"; // Comportamiento normal en pantallas grandes
+      width = shouldBeCollapsed ? "70px" : "160px";
     }
     setCurrentNavbarWidth(width);
   }, [shouldBeCollapsed, isSmallScreen, isMobileMenuOpen]);
@@ -43,19 +40,19 @@ export default function Navbar() {
 
   return (
     <NavbarContext.Provider value={{ navbarWidth: currentNavbarWidth }}>
-      {/* Botón de hamburguesa visible solo en pantallas pequeñas */}
+     
       {isSmallScreen && (
         <HamburgerButton onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <i className="fa fa-bars"></i> {/* Icono de hamburguesa */}
+          <i className="fa fa-bars"></i>
         </HamburgerButton>
       )}
 
       <NavBar
         collapsed={shouldBeCollapsed}
-        isSmallScreen={isSmallScreen} // Pasa isSmallScreen a styled-component
-        onMouseEnter={() => !isSmallScreen && setIsHovered(true)} // Solo reacciona al hover en pantallas grandes
-        onMouseLeave={() => !isSmallScreen && setIsHovered(false)} // Solo reacciona al hover en pantallas grandes
-        // Cierra el menú móvil al hacer clic en un enlace
+        isSmallScreen={isSmallScreen}
+        onMouseEnter={() => !isSmallScreen && setIsHovered(true)}
+        onMouseLeave={() => !isSmallScreen && setIsHovered(false)}
+       
         onClick={() => {
           if (isSmallScreen && isMobileMenuOpen) {
             setIsMobileMenuOpen(false);
@@ -63,6 +60,7 @@ export default function Navbar() {
         }}
       >
         <div className="sidebar">
+        
           <div className="top">
             <img src="./src/images/logo.png" alt="logo" className="logo" />
           </div>
@@ -112,17 +110,13 @@ export default function Navbar() {
   );
 }
 
-// ---
-// Styled Components
-// ---
-
 const HamburgerButton = styled.button`
-  display: none; /* Oculto por defecto */
+  display: none;
   position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1001; /* Asegura que esté por encima de todo */
-  background-color: #111;
+  top: 5px;
+  left: 45px;
+  z-index: 1001;
+  background-color: transparent;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -142,7 +136,6 @@ const HamburgerButton = styled.button`
 const NavBar = styled.div`
   .sidebar {
     height: 100vh;
-    /* Ajusta el ancho para pantallas pequeñas: 0px si está colapsado (oculto), 140px si está abierto */
     width: ${(props) => {
       if (props.isSmallScreen) {
         return props.collapsed ? "0px" : "140px";
@@ -156,11 +149,11 @@ const NavBar = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: width 0.3s ease; /* Transición suave para el cambio de ancho */
+    transition: width 0.3s ease;
     font-size: 16px;
     color: #f1f1f1;
-    overflow: hidden; /* Muy importante para ocultar el contenido cuando el ancho es 0 */
-    z-index: 1000; /* Asegura que el navbar esté por encima del contenido principal */
+    overflow: hidden;
+    z-index: 1000;
   }
 
   .top {
@@ -168,6 +161,14 @@ const NavBar = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 10px 0;
+    /* --- ELIMINAMOS EL PADDING CONDICIONAL DE AQUÍ --- */
+    /* Lo centramos verticalmente en móviles para que quede debajo del botón */
+    ${(props) =>
+      props.isSmallScreen &&
+      !props.collapsed &&
+      `
+      padding-top: 60px; /* Ajusta este valor para crear espacio debajo del botón de hamburguesa */
+    `}
   }
 
   .logo {
@@ -191,7 +192,7 @@ const NavBar = styled.div`
     justify-content: ${(props) => (props.collapsed ? "center" : "flex-start")};
     gap: 10px;
     transition: all 0.3s ease;
-    white-space: nowrap; /* Evita que el texto de los enlaces se rompa en varias líneas */
+    white-space: nowrap;
   }
 
   .sidebar a:hover {
@@ -221,24 +222,21 @@ const NavBar = styled.div`
     color: var(--text-hover);
   }
 
-  /* Media query para estilos generales, el ancho se maneja con la prop collapsed */
   @media (max-width: 768px) {
     .sidebar {
-      /* Ya no necesitas definir el width aquí, lo maneja la prop collapsed */
       font-size: 14px;
     }
 
     .sidebar a {
       padding: 10px;
       font-size: 14px;
-      justify-content: flex-start; /* Siempre al inicio en móvil si el menú está abierto */
+      justify-content: flex-start;
     }
 
     .logo {
-      max-width: 60px; /* Tamaño fijo del logo en móvil cuando el menú está abierto */
+      max-width: 60px;
     }
 
-    /* Oculta los títulos de los enlaces cuando el menú móvil está colapsado a 0px */
     .sidebar-links a span {
       display: ${(props) => (props.collapsed ? "none" : "inline")};
     }
