@@ -29,6 +29,11 @@ const FooterContainer = styled.footer`
   opacity: ${(props) => (props.className?.includes('in-contact') ? 1 : 0)};
   transform: translateY(${(props) => (props.className?.includes('in-contact') ? '0' : '20px')});
   pointer-events: ${(props) => (props.className?.includes('in-contact') ? 'auto' : 'none')};
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
 
   &.in-contact {
     background-color: #222;

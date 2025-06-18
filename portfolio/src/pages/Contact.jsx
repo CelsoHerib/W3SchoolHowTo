@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import useOnScreen from '../hooks/useOnScreen';
 import { useNavbar } from '../components/NavbarContext';
+import Footer from '../components/Footer';
+
 
 export default function Contact() {
   const { setIsInContact } = useNavbar(); // 👈 Recibimos setter desde el contexto
@@ -17,7 +19,6 @@ export default function Contact() {
   });
   const [status, setStatus] = useState('');
 
-  // Actualiza el estado del Navbar/Footer cuando entramos/salimos de Contact
   useEffect(() => {
     setIsInContact(isVisible);
   }, [isVisible, setIsInContact]);
@@ -113,6 +114,7 @@ export default function Contact() {
           </InfoItem>
         </InfoContainer>
       </ContactContent>
+      <Footer />
     </ContactContainer>
   );
 }
