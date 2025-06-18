@@ -1,14 +1,26 @@
+// src/pages/Contact.jsx
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import useOnScreen from '../hooks/useOnScreen';
+import { useNavbar } from '../components/NavbarContext';
 
 export default function Contact() {
+  const { setIsInContact } = useNavbar(); // 👈 Recibimos setter desde el contexto
+  const contactRef = useRef(null); // 👈 Referencia para detectar intersección
+  const isVisible = useOnScreen(contactRef); // 👈 Detecta si está visible
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
   const [status, setStatus] = useState('');
+
+  // Actualiza el estado del Navbar/Footer cuando entramos/salimos de Contact
+  useEffect(() => {
+    setIsInContact(isVisible);
+  }, [isVisible, setIsInContact]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +33,7 @@ export default function Contact() {
 
     try {
       await axios.post(
-        'https://formspree.io/f/YOUR_FORM_ID',  // 👈 Reemplaza con tu ID real de Formspree
+        'https://formspree.io/f/YOUR_FORM_ID',  // Reemplaza con tu ID real de Formspree
         formData,
         {
           headers: {
@@ -38,7 +50,7 @@ export default function Contact() {
   };
 
   return (
-    <ContactContainer>
+    <ContactContainer ref={contactRef}>
       <SeparatorSection>
         <SeparatorLine />
         <LogoContainer>
@@ -104,7 +116,6 @@ export default function Contact() {
     </ContactContainer>
   );
 }
-
 const ContactContainer = styled.div`
   min-height: 100vh;
   background: #000;
@@ -113,6 +124,7 @@ const ContactContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 4rem 1rem;
+  scroll-margin-top: 80px;
 `;
 
 const SeparatorSection = styled.div`

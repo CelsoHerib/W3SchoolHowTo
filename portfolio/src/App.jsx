@@ -1,39 +1,20 @@
-import { useContext } from 'react';
+// src/App.jsx
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { NavbarProvider } from './components/NavbarContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PageTransition from './components/PageTransition';
+
+// Importa tus páginas
 import Home from './pages/Home';
 import About from './pages/About';
 import Testimonials from './pages/Testimonials';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import Implemetaciones from './pages/Implementaciones';
-
-
-import { NavbarContext } from './components/NavbarContext';
-
-function App() {
- 
-  return (
-    <Router>
-      <AppContainer>
-        <Navbar />
-        <ContentWrapper>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/implementaciones" element={<Implemetaciones />} />
-          </Routes>
-        </ContentWrapper>
-        <Footer />
-      </AppContainer>
-    </Router>
-  );
-}
+import Implementaciones from './pages/Implementaciones';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -41,47 +22,25 @@ const AppContainer = styled.div`
   flex-direction: column;
 `;
 
-const ContentWrapper = styled.main`
-  flex: 1;
-  transition: margin-left 0.3s ease;
-  overflow-x: hidden;
-  padding-left: 0;
-
-  ${(props) => {
-
-    
-  }}
-`;
-
-const MainContentWithContext = ({ children }) => {
-  const { navbarWidth } = useContext(NavbarContext);
-  const numericWidth = parseFloat(navbarWidth);
+function App() {
   return (
-    <ContentWrapper style={{ marginLeft: `${numericWidth}px` }}>
-      {children}
-    </ContentWrapper>
-  );
-};
-
-function AppRevised() {
-  return (
-    <Router>
-      <AppContainer>
-        <Navbar />
-        <MainContentWithContext>
+    <NavbarProvider>
+      <Router>
+        <AppContainer>
+          <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/implementaciones" element={<Implemetaciones />} />
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
+            <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+            <Route path="/implementaciones" element={<PageTransition><Implementaciones /></PageTransition>} />
           </Routes>
-        </MainContentWithContext>
-        <Footer />
-      </AppContainer>
-    </Router>
+          <Footer />
+        </AppContainer>
+      </Router>
+    </NavbarProvider>
   );
 }
 
-export default AppRevised;
+export default App;
