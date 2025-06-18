@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-
-// Importa tus logos aquí. Asegúrate de que las rutas sean correctas.
-// Asumo que los logos están en src/images/skills/
 import reactLogo from '../images/react.png';
 import nodeLogo from '../images/node.png';
 import jsLogo from '../images/javascript.png';
@@ -10,7 +7,7 @@ import mongoLogo from '../images/mongo.png';
 import postgresLogo from '../images/postgre.png';
 
 export default function About() {
-  // Objeto para almacenar los datos de los skills (nombre y ruta del logo)
+ 
   const skillData = [
     { name: 'React', logo: reactLogo },
     { name: 'Node.js', logo: nodeLogo },

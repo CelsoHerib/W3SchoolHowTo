@@ -36,7 +36,7 @@ const FooterContainer = styled.footer`
 
 
   &.in-contact {
-    background-color: #222;
+    background-color: transparent;
     border-top: 1px solid #444;
     box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05);
   }
