@@ -1,9 +1,7 @@
-// src/components/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavbar } from './NavbarContext';
-import Footer from './Footer';
 
 export default function Navbar() {
   const location = useLocation();
