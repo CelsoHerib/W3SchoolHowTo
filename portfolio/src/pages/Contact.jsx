@@ -1,16 +1,16 @@
-// src/pages/Contact.jsx
+
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import useOnScreen from '../hooks/useOnScreen';
-import { useNavbar } from '../components/NavbarContext';
-import Footer from '../components/Footer';
-
+import { NavbarContext } from '../components/NavbarContext'; 
 
 export default function Contact() {
-  const { setIsInContact } = useNavbar(); // 👈 Recibimos setter desde el contexto
-  const contactRef = useRef(null); // 👈 Referencia para detectar intersección
-  const isVisible = useOnScreen(contactRef); // 👈 Detecta si está visible
+
+  const { setIsInContact } = useContext(NavbarContext); 
+
+  const contactRef = useRef(null);
+  const isVisible = useOnScreen(contactRef);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -19,8 +19,11 @@ export default function Contact() {
   });
   const [status, setStatus] = useState('');
 
+  
   useEffect(() => {
-    setIsInContact(isVisible);
+    if (setIsInContact) { 
+      setIsInContact(isVisible);
+    }
   }, [isVisible, setIsInContact]);
 
   const handleChange = (e) => {
@@ -34,7 +37,7 @@ export default function Contact() {
 
     try {
       await axios.post(
-        'https://formspree.io/f/YOUR_FORM_ID',  // Reemplaza con tu ID real de Formspree
+        'https://formspree.io/f/YOUR_FORM_ID',
         formData,
         {
           headers: {
@@ -118,6 +121,8 @@ export default function Contact() {
     </ContactContainer>
   );
 }
+
+
 const ContactContainer = styled.div`
   min-height: 100vh;
   background: #000;
@@ -126,7 +131,9 @@ const ContactContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 4rem 1rem;
-  scroll-margin-top: 80px;
+  scroll-margin-top: 80px; /* Asegura que el scroll a esta sección deje espacio para el navbar fijo */
+  /* Añade padding-bottom para dejar espacio al footer fijo si es necesario */
+  padding-bottom: 80px; /* Ajusta este valor si tu footer es más alto */
 `;
 
 const SeparatorSection = styled.div`

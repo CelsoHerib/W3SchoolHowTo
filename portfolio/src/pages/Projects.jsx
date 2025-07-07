@@ -3,15 +3,10 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// No necesitas importar NavbarContext si solo usas las props para el padding
-// en ProjectsContainer, ya que App.jsx ya se encarga del desplazamiento.
-// Sin embargo, si lo necesitas para alguna otra lógica interna del componente Projects,
-// puedes mantenerlo. Para el padding, lo eliminaremos aquí.
-// import { NavbarContext } from '../components/NavbarContext'; // Ya no es estrictamente necesario aquí para el padding
+
 
 export default function Projects() {
 
-  // const { navbarWidth, isSmallScreen, isMobileMenuOpen } = useContext(NavbarContext); // Ya no es necesario obtenerlos para el padding
 
   const settings = {
     dots: true,
@@ -85,7 +80,7 @@ export default function Projects() {
   ];
 
   return (
-    <ProjectsContainer> {/* Eliminamos las props de ancho */}
+    <ProjectsContainer>
       <SeparatorSection>
         <SeparatorLine />
         <LogoContainer>
@@ -132,14 +127,10 @@ const ProjectsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 2rem; /* Mantén un padding fijo para el contenido interno */
+  padding: 4rem 2rem;
   width: 100%;
-  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
-  overflow: hidden; /* Esto es importante para el carrusel, si no se maneja bien */
-
-  /* --- ELIMINAMOS TODA LA LÓGICA DE PADDING-LEFT BASADA EN NAVBAR --- */
-  /* El padre (MainContentWithContext en App.jsx) ya maneja el margen */
-  /*
+  box-sizing: border-box;
+  overflow: hidden;
   padding-left: ${(props) => (props.isSmallScreen ? "4rem" : props.navbarWidth)};
   transition: padding-left 0.3s ease;
 
@@ -271,13 +262,12 @@ const CarouselWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
-     /* Asegúrate de que los botones de navegación no se salgan del layout */
      .slick-prev {
-        left: 0px; /* Ajusta para que no se salga */
+        left: 0px;
      }
      .slick-next {
-        right: 0px; /* Ajusta para que no se salga */
-        display: none !important; /* Si quieres ocultarlo */
+        right: 0px;
+        display: none !important;
      }
     .slick-dots {
       bottom: -30px;

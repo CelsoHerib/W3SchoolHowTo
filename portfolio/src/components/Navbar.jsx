@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useContext } from "react";
+import styled from "styled-components";
 import { Link, useLocation } from 'react-router-dom';
-import { useNavbar } from './NavbarContext';
+import { NavbarContext } from './NavbarContext'; 
+import SocialLinks from './SocialLinks';
 
 export default function Navbar() {
   const location = useLocation();
-  const { isInContact } = useNavbar();
-
   const [isHovered, setIsHovered] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const shouldBeCollapsed = isSmallScreen ? !isMobileMenuOpen : !isHovered;
+
+  const { setNavbarWidth, setIsInContact } = useContext(NavbarContext); // Also get setIsInContact here
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,26 +21,34 @@ export default function Navbar() {
         setIsMobileMenuOpen(false);
       }
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobileMenuOpen]);
 
+  const shouldBeCollapsed = isSmallScreen ? !isMobileMenuOpen : !isHovered;
+
+
+  useEffect(() => {
+    let width;
+    if (isSmallScreen) {
+      width = isMobileMenuOpen ? "140px" : "0px";
+    } else {
+      width = shouldBeCollapsed ? "70px" : "160px";
+    }
+    setNavbarWidth(width); // Update the context with the calculated width
+  }, [shouldBeCollapsed, isSmallScreen, isMobileMenuOpen, setNavbarWidth]);
+
+
   return (
-    <>
-      {/* Botón Hamburgesa para móviles */}
+    
+    <> 
       {isSmallScreen && (
         <HamburgerButton onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M4 6l16 0" />
-            <path d="M4 12l16 0" />
-            <path d="M4 18l16 0" />
-          </svg>
+          <i className="fa fa-bars"></i>
         </HamburgerButton>
       )}
 
-      {/* Sidebar principal */}
       <NavBar
         collapsed={shouldBeCollapsed}
         isSmallScreen={isSmallScreen}
@@ -59,36 +67,34 @@ export default function Navbar() {
 
           <div className="sidebar-links">
             <Link to="/" className={location.pathname === '/' ? 'active' : ''} title="Home">
-              {<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>}
-              {!shouldBeCollapsed && ' Home'}
+              <i className="fa fa-fw fa-home"></i>
+              {!shouldBeCollapsed && " Home"}
             </Link>
             <Link to="/about" className={location.pathname === '/about' ? 'active' : ''} title="About">
-              {<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-id"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /><path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M15 8l2 0" /><path d="M15 12l2 0" /><path d="M7 16l10 0" /></svg>}
-              {!shouldBeCollapsed && ' About'}
+              <i className="fa fa-fw fa-address-card"></i>
+              {!shouldBeCollapsed && " About"}
             </Link>
             <Link to="/testimonials" className={location.pathname === '/testimonials' ? 'active' : ''} title="Testimonials">
-              {<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-users"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>}
-              {!shouldBeCollapsed && ' Testimonials'}
+              <i className="fa fa-fw fa-user"></i>
+              {!shouldBeCollapsed && " Testimonials"}
             </Link>
             <Link to="/projects" className={location.pathname === '/projects' ? 'active' : ''} title="Projects">
-              {<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-folder-code"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4" /><path d="M20 21l2 -2l-2 -2" /><path d="M17 17l-2 2l2 2" /></svg>}
-              {!shouldBeCollapsed && ' Projects'}
+              <i className="fa fa-fw fa-folder"></i>
+              {!shouldBeCollapsed && " Projects"}
             </Link>
             <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''} title="Contact">
-              {<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>}
-              {!shouldBeCollapsed && ' Contact'}
+              <i className="fa fa-fw fa-envelope"></i>
+              {!shouldBeCollapsed && " Contact"}
             </Link>
+
             <a href="/cv.pdf" download title="Descargar CV">
-              {<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M12 17v-6" /><path d="M9.5 14.5l2.5 2.5l2.5 -2.5" /></svg>}
-              {!shouldBeCollapsed && ' CV'}
+              <i className="fa fa-fw fa-download"></i>
+              {!shouldBeCollapsed && " CV"}
             </a>
           </div>
 
-          {/* Este es el footer que aparece siempre en el sidebar */}
           <div className="sidebar-footer">
-            <a href="https://twitter.com"  target="_blank" rel="noopener noreferrer">🐦</a>
-            <a href="https://github.com/CelsoHerib"  target="_blank" rel="noopener noreferrer">🐙</a>
-            <a href="https://linkedin.com/in/celsoherib"  target="_blank" rel="noopener noreferrer">💼</a>
+            <SocialLinks variant="sidebar" />
           </div>
         </div>
       </NavBar>
@@ -96,17 +102,17 @@ export default function Navbar() {
   );
 }
 
-// Estilos Styled Components
-
 const NavBar = styled.div`
   .sidebar {
     height: 100vh;
-    width: ${(props) => {
-      if (props.isSmallScreen) {
-        return props.collapsed ? "0px" : "140px";
-      }
-      return props.collapsed ? "70px" : "160px";
-    }};
+    width: ${(props) =>
+      props.isSmallScreen
+        ? props.collapsed
+          ? "0px"
+          : "140px"
+        : props.collapsed
+        ? "70px"
+        : "160px"};
     position: fixed;
     top: 0;
     left: 0;
@@ -209,5 +215,19 @@ const HamburgerButton = styled.button`
   }
   @media (max-width: 768px) {
     display: block;
+  }
+`;
+
+const CollapseButton = styled.button`
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #333;
   }
 `;
